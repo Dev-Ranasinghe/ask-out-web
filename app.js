@@ -283,6 +283,21 @@ document.addEventListener('DOMContentLoaded', () => {
     navigateToInstant('opcionSi', true);
   });
 
+  function moveNoButton(scale) {
+    if (!btnNo) return;
+
+    const row = btnNo.closest('.btn-group-row');
+    const compactScreen = window.matchMedia('(max-width: 480px)').matches;
+    const availableWidth = row ? Math.max(0, row.clientWidth - btnNo.offsetWidth) : 0;
+    const horizontalRange = compactScreen ? 0 : Math.min(80, availableWidth / 2);
+    const horizontalOffset = (Math.random() * 2 - 1) * horizontalRange;
+    const verticalOffset = compactScreen
+      ? 8 + Math.random() * 24
+      : (Math.random() * 2 - 1) * 18;
+
+    btnNo.style.transform = `translate(${horizontalOffset}px, ${verticalOffset}px) scale(${scale})`;
+  }
+
   // NO Button handling (Cycles 6 refusal variants -> Instant transition to opcion-no)
   bindClick(btnNo, () => {
     noClickCount++;
@@ -295,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const noScale = Math.max(0.7, 1 - (noClickCount * 0.05));
 
       if (btnYes) btnYes.style.transform = `scale(${yesScale})`;
-      if (btnNo) btnNo.style.transform = `scale(${noScale})`;
+      moveNoButton(noScale);
     } else {
       // 6th Click ("I SAID NO!") -> Instant transition to Opcion no
       navigateToInstant('opcionNo');
@@ -341,7 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btnYes.classList.remove('variant-dark');
       btnYes.style.transform = 'scale(1)';
     }
-    if (btnNo) btnNo.style.transform = 'scale(1)';
+    if (btnNo) btnNo.style.transform = '';
     if (btnTryAgain) btnTryAgain.classList.remove('variant-dark');
   }
 
