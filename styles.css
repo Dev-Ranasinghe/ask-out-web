@@ -59,6 +59,10 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
+#background-audio {
+  display: none;
+}
+
 /* Background Animation Layer */
 .bg-viewport {
   position: fixed;

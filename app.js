@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const loadingOverlay = document.getElementById('loading-overlay');
   const loadingText = document.getElementById('loading-text');
   const backNavigation = document.getElementById('back-navigation');
+  const backgroundAudio = document.getElementById('background-audio');
 
   const btnWelcomeNext = document.getElementById('btn-welcome-next');
   const interactiveEnvelope = document.getElementById('interactive-envelope');
@@ -67,6 +68,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const soundIconOn = document.getElementById('sound-icon-on');
   const soundIconOff = document.getElementById('sound-icon-off');
   let currentScreenId = 'welcome';
+
+  function updateAudioControl() {
+    if (soundIconOn) soundIconOn.style.display = audioEnabled ? 'block' : 'none';
+    if (soundIconOff) soundIconOff.style.display = audioEnabled ? 'none' : 'block';
+    if (audioToggle) {
+      audioToggle.setAttribute('aria-pressed', String(!audioEnabled));
+      audioToggle.setAttribute(
+        'aria-label',
+        audioEnabled ? 'Mute background music and sound effects' : 'Play background music and sound effects'
+      );
+    }
+  }
+
+  function startBackgroundAudio() {
+    if (!audioEnabled || !backgroundAudio) return;
+    backgroundAudio.play().catch(() => {});
+  }
+
+  function syncBackgroundAudio() {
+    if (!backgroundAudio) return;
+    if (audioEnabled) {
+      startBackgroundAudio();
+    } else {
+      backgroundAudio.pause();
+    }
+  }
 
   const previousScreens = {
     flightDelivery: 'welcome',
@@ -229,10 +256,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Audio Toggle Switch ---
   bindClick(audioToggle, () => {
     audioEnabled = !audioEnabled;
-    if (soundIconOn) soundIconOn.style.display = audioEnabled ? 'block' : 'none';
-    if (soundIconOff) soundIconOff.style.display = audioEnabled ? 'none' : 'block';
-    if (audioToggle) audioToggle.setAttribute('aria-pressed', String(!audioEnabled));
+    updateAudioControl();
+    syncBackgroundAudio();
   });
+
+  document.addEventListener('pointerdown', startBackgroundAudio, { once: true });
+  document.addEventListener('keydown', startBackgroundAudio, { once: true });
+  updateAudioControl();
 
   bindClick(backNavigation, () => {
     const previousScreen = previousScreens[currentScreenId];
