@@ -519,6 +519,10 @@ html, body {
   position: relative;
 }
 
+.question-actions {
+  min-height: 110px;
+}
+
 /* Primary YES Button */
 .btn-yes {
   background: var(--btn-yes-bg);
@@ -716,7 +720,15 @@ html, body {
     gap: 12px;
   }
 
+  .question-actions {
+    min-height: 150px;
+  }
+
   .btn-yes, .btn-no {
     width: 100%;
+  }
+
+  .question-actions .btn-no {
+    width: auto;
   }
 }

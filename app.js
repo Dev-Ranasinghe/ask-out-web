@@ -283,19 +283,21 @@ document.addEventListener('DOMContentLoaded', () => {
     navigateToInstant('opcionSi', true);
   });
 
-  function moveNoButton(scale) {
+  function moveNoButton() {
     if (!btnNo) return;
 
     const row = btnNo.closest('.btn-group-row');
-    const compactScreen = window.matchMedia('(max-width: 480px)').matches;
-    const availableWidth = row ? Math.max(0, row.clientWidth - btnNo.offsetWidth) : 0;
-    const horizontalRange = compactScreen ? 0 : Math.min(80, availableWidth / 2);
-    const horizontalOffset = (Math.random() * 2 - 1) * horizontalRange;
-    const verticalOffset = compactScreen
-      ? 8 + Math.random() * 24
-      : (Math.random() * 2 - 1) * 18;
+    if (!row) return;
 
-    btnNo.style.transform = `translate(${horizontalOffset}px, ${verticalOffset}px) scale(${scale})`;
+    btnNo.style.position = 'absolute';
+    const maxLeft = Math.max(0, row.clientWidth - btnNo.offsetWidth);
+    const maxTop = Math.max(0, row.clientHeight - btnNo.offsetHeight);
+    const left = Math.random() * maxLeft;
+    const top = Math.random() * maxTop;
+
+    btnNo.style.left = `${left}px`;
+    btnNo.style.top = `${top}px`;
+    btnNo.style.transform = '';
   }
 
   // NO Button handling (Cycles 6 refusal variants -> Instant transition to opcion-no)
@@ -306,11 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btnNo.textContent = noRefusalTexts[noClickCount];
       playSound('boop');
 
-      const yesScale = 1 + (noClickCount * 0.08);
-      const noScale = Math.max(0.7, 1 - (noClickCount * 0.05));
-
-      if (btnYes) btnYes.style.transform = `scale(${yesScale})`;
-      moveNoButton(noScale);
+      moveNoButton();
     } else {
       // 6th Click ("I SAID NO!") -> Instant transition to Opcion no
       navigateToInstant('opcionNo');
@@ -356,7 +354,12 @@ document.addEventListener('DOMContentLoaded', () => {
       btnYes.classList.remove('variant-dark');
       btnYes.style.transform = 'scale(1)';
     }
-    if (btnNo) btnNo.style.transform = '';
+    if (btnNo) {
+      btnNo.style.position = '';
+      btnNo.style.left = '';
+      btnNo.style.top = '';
+      btnNo.style.transform = '';
+    }
     if (btnTryAgain) btnTryAgain.classList.remove('variant-dark');
   }
 
