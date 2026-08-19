@@ -115,6 +115,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function startBreathingSequence() {
+    if (breathingTimer) clearTimeout(breathingTimer);
+    navigateToInstant('breathing');
+    breathingTimer = setTimeout(() => {
+      breathingTimer = null;
+      navigateToInstant('inicio');
+    }, 5000);
+  }
+
   // --- Router with Loading Transition (for story intro flight/envelope) ---
   function navigateTo(screenId, triggerConfetti = false) {
     playSound('pop');
@@ -229,7 +238,11 @@ document.addEventListener('DOMContentLoaded', () => {
       clearTimeout(breathingTimer);
       breathingTimer = null;
     }
-    if (previousScreen) navigateToInstant(previousScreen);
+    if (currentScreenId === 'inicio') {
+      startBreathingSequence();
+    } else if (previousScreen) {
+      navigateToInstant(previousScreen);
+    }
   });
 
   // --- 0. WELCOME SCREEN LOGIC ---
@@ -260,11 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- 0.98. FINAL SUSPENSE CONFIRMATION SCREEN LOGIC ---
   bindClick(btnSuspenseThreeNext, () => {
-    navigateToInstant('breathing');
-    breathingTimer = setTimeout(() => {
-      breathingTimer = null;
-      navigateToInstant('inicio');
-    }, 5000);
+    startBreathingSequence();
   });
 
   // --- 1. START QUESTION SCREEN LOGIC ---
