@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function startBackgroundAudio() {
     if (!audioEnabled || !backgroundAudio) return;
+    if (backgroundAudio.readyState === 0) backgroundAudio.load();
     backgroundAudio.play().catch(() => {});
   }
 
@@ -275,11 +276,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   startBackgroundAudio();
-  document.addEventListener('pointerdown', event => {
+  const handleAudioGesture = event => {
     if (!(event.target instanceof Element) || !event.target.closest('#audio-toggle')) {
       unlockBackgroundAudio();
     }
-  }, { once: true });
+  };
+
+  document.addEventListener('pointerdown', handleAudioGesture, { once: true });
+  document.addEventListener('touchstart', handleAudioGesture, { once: true, passive: true });
   document.addEventListener('keydown', unlockBackgroundAudio, { once: true });
   updateAudioControl();
 
