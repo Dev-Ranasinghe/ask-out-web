@@ -557,6 +557,11 @@ html, body {
   box-shadow: 0 4px 12px rgba(158, 16, 48, 0.4);
 }
 
+.question-actions .btn-yes:hover,
+.question-actions .btn-yes:active {
+  transform: none;
+}
+
 /* Playful Dynamic NO Button */
 .btn-no {
   background: var(--btn-no-bg);
