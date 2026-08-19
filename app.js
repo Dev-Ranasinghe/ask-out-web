@@ -86,6 +86,12 @@ document.addEventListener('DOMContentLoaded', () => {
     backgroundAudio.play().catch(() => {});
   }
 
+  function unlockBackgroundAudio() {
+    if (!backgroundAudio || !audioEnabled) return;
+    backgroundAudio.muted = false;
+    startBackgroundAudio();
+  }
+
   function syncBackgroundAudio() {
     if (!backgroundAudio) return;
     if (audioEnabled) {
@@ -260,8 +266,9 @@ document.addEventListener('DOMContentLoaded', () => {
     syncBackgroundAudio();
   });
 
-  document.addEventListener('pointerdown', startBackgroundAudio, { once: true });
-  document.addEventListener('keydown', startBackgroundAudio, { once: true });
+  startBackgroundAudio();
+  document.addEventListener('pointerdown', unlockBackgroundAudio, { once: true });
+  document.addEventListener('keydown', unlockBackgroundAudio, { once: true });
   updateAudioControl();
 
   bindClick(backNavigation, () => {
