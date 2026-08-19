@@ -1,0 +1,572 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+
+/* ==========================================================================
+   Valentine's Day Game - CSS Stylesheet
+   Design Token System & Modern Responsive Styling
+   ========================================================================== */
+
+:root {
+  --font-heading: 'Fredoka', cursive, sans-serif;
+  --font-body: 'Outfit', sans-serif;
+
+  /* Color Palette Tokens */
+  --bg-main: linear-gradient(135deg, #FFF0F3 0%, #FFE3E8 50%, #FFCCD5 100%);
+  --card-bg: rgba(255, 255, 255, 0.88);
+  --card-border: rgba(255, 255, 255, 0.95);
+  
+  --text-main: #3D272A;
+  --text-muted: #7A535A;
+  --text-accent: #E03E65;
+
+  /* Button Tokens */
+  --btn-yes-bg: linear-gradient(135deg, #FF597B 0%, #E03E65 100%);
+  --btn-yes-hover: linear-gradient(135deg, #FF758F 0%, #D6284B 100%);
+  --btn-yes-active: linear-gradient(135deg, #D6284B 0%, #9E1030 100%);
+  --btn-yes-text: #FFFFFF;
+
+  --btn-no-bg: #FFFFFF;
+  --btn-no-border: #FFCCE1;
+  --btn-no-text: #6E443B;
+  --btn-no-hover: #FFF5F8;
+
+  --btn-secondary-bg: #FFF0F3;
+  --btn-secondary-text: #E03E65;
+  --btn-secondary-hover: #FFE3E8;
+
+  /* Shadow & Glow Tokens */
+  --shadow-card: 0 20px 60px rgba(224, 62, 101, 0.15), 0 8px 24px rgba(61, 39, 42, 0.06);
+  --shadow-btn: 0 8px 20px rgba(224, 62, 101, 0.25);
+  --shadow-btn-hover: 0 12px 28px rgba(224, 62, 101, 0.35);
+
+  --radius-card: 32px;
+  --radius-btn: 50px;
+}
+
+/* Base Resets */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  background: var(--bg-main);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Background Animation Layer */
+.bg-viewport {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+#hearts-container {
+  position: absolute;
+  inset: 0;
+}
+
+.floating-heart {
+  position: absolute;
+  bottom: -40px;
+  color: rgba(255, 89, 123, 0.25);
+  animation: floatUp 8s linear infinite;
+  user-select: none;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-105vh) rotate(360deg) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Confetti Canvas */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 99;
+}
+
+/* Main Layout Container */
+.app-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 10;
+}
+
+/* Game Card Screen Container */
+.game-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 2px solid var(--card-border);
+  box-shadow: var(--shadow-card);
+  border-radius: var(--radius-card);
+  padding: 40px 32px;
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease, filter 0.3s ease;
+}
+
+/* --- Full-Screen Cute Loading Overlay --- */
+#loading-overlay, .loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 240, 243, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+#loading-overlay.active, .loading-overlay.active {
+  display: flex !important;
+  opacity: 1 !important;
+  pointer-events: all !important;
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 36px 32px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2.5px solid #FFCCD5;
+  border-radius: 28px;
+  box-shadow: 0 20px 50px rgba(224, 62, 101, 0.25);
+  max-width: 340px;
+  width: 90%;
+  text-align: center;
+}
+
+.heart-spinner {
+  font-size: 3.8rem;
+  animation: pulseBounce 0.8s ease-in-out infinite alternate;
+  line-height: 1;
+}
+
+@keyframes pulseBounce {
+  0% {
+    transform: scale(0.85) rotate(-10deg);
+  }
+  100% {
+    transform: scale(1.25) rotate(10deg);
+  }
+}
+
+.loading-text {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--text-accent);
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.loading-bar-outer {
+  width: 220px;
+  height: 12px;
+  background: #FFF0F3;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid #FFCCD5;
+}
+
+.loading-bar-inner {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #FF597B 0%, #E03E65 100%);
+  border-radius: 10px;
+  animation: loadProgress 2.5s ease-in-out infinite;
+  transform-origin: left;
+}
+
+@keyframes loadProgress {
+  0% {
+    transform: scaleX(0);
+  }
+  50% {
+    transform: scaleX(0.75);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+/* Flight Delivery & Interactive Envelope Animation */
+.flight-container {
+  position: relative;
+  width: 100%;
+  height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flight-svg-anim {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: flyInFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes flyInFloat {
+  0% {
+    transform: translateY(-10px) rotate(-3deg);
+  }
+  100% {
+    transform: translateY(10px) rotate(3deg);
+  }
+}
+
+.envelope-card-btn {
+  background: #FFFFFF;
+  border: 2.5px dashed #FF758F;
+  border-radius: 20px;
+  padding: 20px 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(224, 62, 101, 0.12);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+}
+
+.envelope-card-btn:hover {
+  border-color: var(--text-accent);
+  background: #FFF5F8;
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 16px 40px rgba(224, 62, 101, 0.25);
+}
+
+.envelope-card-btn:active {
+  transform: scale(0.96);
+}
+
+.envelope-icon-pulse {
+  font-size: 3rem;
+  line-height: 1;
+  animation: pulseBounce 1.2s ease-in-out infinite alternate;
+}
+
+.envelope-hint-text {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--text-accent);
+  font-weight: 600;
+}
+
+.screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.screen.active {
+  display: flex;
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Graphic Header */
+.character-box {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.character-box img, .character-box svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(224, 62, 101, 0.15));
+  transition: transform 0.3s ease;
+}
+
+.character-box:hover img, .character-box:hover svg {
+  transform: scale(1.05) rotate(2deg);
+}
+
+/* Badge Header */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #FFE3E8;
+  color: var(--text-accent);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Main Titles */
+.main-title {
+  font-family: var(--font-heading);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.25;
+}
+
+.main-title span.highlight {
+  color: var(--text-accent);
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-top: -8px;
+}
+
+/* Action Buttons Container */
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.btn-group-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+/* Primary YES Button */
+.btn-yes {
+  background: var(--btn-yes-bg);
+  color: var(--btn-yes-text);
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 16px 36px;
+  border-radius: var(--radius-btn);
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-btn);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 140px;
+  outline: none;
+  user-select: none;
+}
+
+.btn-yes:hover {
+  background: var(--btn-yes-hover);
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: var(--shadow-btn-hover);
+}
+
+.btn-yes:active, .btn-yes.variant-dark {
+  background: var(--btn-yes-active) !important;
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 4px 12px rgba(158, 16, 48, 0.4);
+}
+
+/* Playful Dynamic NO Button */
+.btn-no {
+  background: var(--btn-no-bg);
+  color: var(--btn-no-text);
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 16px 28px;
+  border-radius: var(--radius-btn);
+  border: 2px solid var(--btn-no-border);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 120px;
+  outline: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.btn-no:hover {
+  background: var(--btn-no-hover);
+  border-color: var(--text-accent);
+  transform: translateY(-2px);
+}
+
+.btn-no:active {
+  transform: scale(0.95);
+}
+
+/* Secondary Button ("Try again") */
+.btn-secondary {
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: var(--radius-btn);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.btn-secondary:hover {
+  background: var(--btn-secondary-hover);
+  transform: translateY(-2px);
+}
+
+.btn-secondary.variant-dark {
+  color: #4A2B20 !important;
+  background: #FFE8CE !important;
+}
+
+/* Wedding / Romantic Card Styling */
+.wedding-card {
+  background: #FFFFFF;
+  border: 2px solid #FFE3E8;
+  border-radius: 20px;
+  padding: 24px 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(224, 62, 101, 0.08);
+}
+
+.romantic-text {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text-accent);
+  line-height: 1.45;
+  text-align: center;
+}
+
+.romantic-text span {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+/* Audio Toggle Floating Switch */
+.audio-toggle {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1.5px solid #FFCCD5;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-accent);
+  transition: all 0.2s;
+}
+
+.audio-toggle:hover {
+  transform: scale(1.1);
+  background: #FFF;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 480px) {
+  .game-card {
+    padding: 28px 20px;
+    border-radius: 24px;
+  }
+
+  .main-title {
+    font-size: 1.5rem;
+  }
+
+  .character-box {
+    width: 130px;
+    height: 130px;
+  }
+
+  .btn-group-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn-yes, .btn-no {
+    width: 100%;
+  }
+}

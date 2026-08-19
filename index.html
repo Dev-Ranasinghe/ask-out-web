@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Girlfriend? 💖 | Ask Her Out</title>
+  <meta name="description"
+    content="A cute, interactive romantic game asking her to be your girlfriend with custom decision trees, duck illustrations, and date planning.">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
+  <link rel="stylesheet" href="styles.css?v=6">
+</head>
+
+<body>
+
+  <!-- Floating Background Hearts -->
+  <div class="bg-viewport">
+    <div id="hearts-container"></div>
+  </div>
+
+  <!-- Particle Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Full-Screen Romantic Loading Overlay -->
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="loading-content">
+      <div class="heart-spinner">💖</div>
+      <p id="loading-text" class="loading-text">Loading romance... ✨</p>
+      <div class="loading-bar-outer">
+        <div class="loading-bar-inner"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Game Container -->
+  <main class="app-container">
+    <div class="game-card">
+
+      <!-- Audio Mute/Unmute Switch -->
+      <button id="audio-toggle" class="audio-toggle" aria-label="Toggle Sound Effects">
+        <svg id="sound-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
+        <svg id="sound-icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+      </button>
+
+      <!-- 0. SCREEN: Welcome (holaaa bansheee) -->
+      <section id="screen-welcome" class="screen active">
+        <div class="badge">SPECIAL GREETING</div>
+
+        <div class="character-box">
+          <img src="assets/duck-asking.svg" alt="Cute duck holding heart">
+        </div>
+
+        <h1 class="main-title">holaaa <span class="highlight">bansheee ✨</span></h1>
+        <p class="subtitle">Welcome to your special romantic surprise! 💕</p>
+
+        <div class="btn-group">
+          <button id="btn-welcome-next" class="btn-yes">Click to continue ✨</button>
+        </div>
+      </section>
+
+      <!-- 0.5. SCREEN: Flight & Envelope Delivery (Interactive Flight & Envelope) -->
+      <section id="screen-flight-delivery" class="screen">
+        <div class="badge">SPECIAL DELIVERY 💌</div>
+
+        <div class="flight-container">
+          <img src="assets/envelope-flight.svg" alt="Flight delivering envelope" class="flight-svg-anim">
+        </div>
+
+        <h2 class="main-title">Theres something <br><span class="highlight">for u... 💌</span></h2>
+        <p class="subtitle">Tap the envelope letter to open it! ✨</p>
+
+        <div id="interactive-envelope" class="envelope-card-btn" role="button" aria-label="Open Envelope">
+          <div class="envelope-icon-pulse">✉️</div>
+          <span class="envelope-hint-text">Tap to Open Letter 💖</span>
+        </div>
+      </section>
+
+      <!-- 0.8. SCREEN: Pre-Question Confession -->
+      <section id="screen-pre-question" class="screen">
+        <div class="badge">CONFESSION 💕</div>
+
+        <div class="character-box">
+          <img src="assets/duck-happy.svg" alt="Happy duck">
+        </div>
+
+        <h2 class="main-title">Even though we expressed <br><span class="highlight">our feelings...</span></h2>
+        <p class="subtitle">I still wanna ask this special question 🥺💖</p>
+
+        <div class="btn-group">
+          <button id="btn-pre-question-next" class="btn-yes">What is it? 💖</button>
+        </div>
+      </section>
+
+      <!-- 1. SCREEN: inicio (Start Question Screen) -->
+      <section id="screen-inicio" class="screen">
+        <div class="badge">ROMANTIC QUEST</div>
+        
+        <div class="character-box">
+          <img src="assets/duck-asking.svg" alt="Cute duck holding heart" id="img-inicio">
+        </div>
+
+        <h1 class="main-title">Will you be my <span class="highlight">girlfriend?</span></h1>
+        <p class="subtitle">Choose wisely... there is only one right answer! 💕</p>
+
+        <div class="btn-group">
+          <div class="btn-group-row">
+            <button id="btn-yes" class="btn-yes">YES 💖</button>
+            <button id="btn-no" class="btn-no">NO 💔</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. SCREEN: Opcion no (Refusal / Error Screen) -->
+      <section id="screen-opcion-no" class="screen">
+        <div class="badge">UH OH...</div>
+
+        <div class="character-box">
+          <img src="assets/duck-sad.svg" alt="Sad duck with teardrop">
+        </div>
+
+        <h2 class="main-title">Wait, really? <br><span class="highlight">I SAID NO!</span></h2>
+        <p class="subtitle">Are you sure about that? Your heart knows the truth! 🥺</p>
+
+        <div class="btn-group">
+          <button id="btn-admit" class="btn-yes">Admit real feelings ❤️</button>
+          <button id="btn-try-again" class="btn-secondary">Try again 🔄</button>
+        </div>
+      </section>
+
+      <!-- 3. SCREEN: Opcion Si (Success / Choice Screen) -->
+      <section id="screen-opcion-si" class="screen">
+        <div class="badge">YAY! BEST DAY EVER!</div>
+
+        <div class="character-box">
+          <img src="assets/duck-happy.svg" alt="Happy dancing duck with hearts">
+        </div>
+
+        <h2 class="main-title">Knew you couldn't resist! <span class="highlight">💖</span></h2>
+        <p class="subtitle">Now what should we do next?</p>
+
+        <div class="btn-group">
+          <button id="btn-wedding" class="btn-yes">Go on a date with me 🌹</button>
+          <button id="btn-continue-life" class="btn-no">Continue with your life 🚶‍♂️</button>
+        </div>
+      </section>
+
+      <!-- 4. SCREEN: boda (Official Date Screen) -->
+      <section id="screen-boda" class="screen">
+        <div class="badge">OFFICIAL DATE</div>
+
+        <div class="character-box">
+          <img src="assets/duck-wedding.svg" alt="Duck couple on date">
+        </div>
+
+        <h2 class="main-title">It's a Date! <span class="highlight">!!!! &lt;33</span></h2>
+        <p class="subtitle">Get ready for magic! 🎉</p>
+
+        <div class="wedding-card">
+          <p class="romantic-text">
+            See yaa bansheee on 23rd! 🌷✨<br>
+            <span>Can't wait to make unforgettable memories with you 💕</span>
+          </p>
+        </div>
+
+        <div class="btn-group">
+          <button id="btn-restart" class="btn-secondary">Play Again 🔁</button>
+        </div>
+      </section>
+
+      <!-- 5. SCREEN: seguir con tu ... (Sad Duck / ERROR Screen) -->
+      <section id="screen-seguir-con-tu" class="screen">
+        <div class="badge">SYSTEM ERROR 404</div>
+
+        <div class="character-box">
+          <img src="assets/duck-error.svg" alt="Shocked duck with error signs">
+        </div>
+
+        <h2 class="main-title"><span class="highlight">ERROR!</span></h2>
+        <p class="subtitle">That option does not exist in love! Returning you to happiness...</p>
+
+        <div class="btn-group">
+          <button id="btn-return-yes" class="btn-yes">Fix Error (Say YES!) 💖</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

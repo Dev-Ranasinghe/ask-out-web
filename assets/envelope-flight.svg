@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="240" height="180">
+  <defs>
+    <linearGradient id="planeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFE3E8"/>
+    </linearGradient>
+    <linearGradient id="envGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF758F"/>
+      <stop offset="100%" stop-color="#E03E65"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#E03E65" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#shadow)">
+    <!-- Trail Dotted Lines -->
+    <path d="M 10 140 Q 60 110 100 130 T 150 90" fill="none" stroke="#FF758F" stroke-width="3" stroke-dasharray="6 6"/>
+
+    <!-- Paper Airplane (Left Top) -->
+    <g transform="translate(45, 40) rotate(15) scale(0.85)">
+      <!-- Main Plane Body -->
+      <path d="M 0 0 L 70 30 L 10 50 L 0 0 Z" fill="url(#planeGrad)" stroke="#E03E65" stroke-width="2"/>
+      <path d="M 70 30 L 25 22 L 10 50 Z" fill="#FFCCD5" stroke="#E03E65" stroke-width="1.5"/>
+      <path d="M 25 22 L 70 30 L 35 12 Z" fill="#FFFFFF" stroke="#E03E65" stroke-width="1.5"/>
+    </g>
+
+    <!-- Interactive Envelope (Centered Below) -->
+    <g id="svg-envelope-group" transform="translate(70, 75)">
+      <!-- Envelope Back Layer -->
+      <rect x="0" y="0" width="100" height="70" rx="8" fill="#D6284B"/>
+      
+      <!-- Letter paper peeking out -->
+      <rect x="10" y="10" width="80" height="50" rx="4" fill="#FFFFFF"/>
+      <line x1="20" y1="22" x2="60" y2="22" stroke="#FF758F" stroke-width="2" stroke-linecap="round"/>
+      <line x1="20" y1="30" x2="70" y2="30" stroke="#FFB3C1" stroke-width="2" stroke-linecap="round"/>
+      <line x1="20" y1="38" x2="50" y2="38" stroke="#FFB3C1" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- Envelope Bottom Flap -->
+      <path d="M 0 70 L 50 38 L 100 70 Z" fill="url(#envGrad)"/>
+      <path d="M 0 0 L 0 70 L 38 35 Z" fill="#C9184A"/>
+      <path d="M 100 0 L 100 70 L 62 35 Z" fill="#C9184A"/>
+
+      <!-- Envelope Top Flap (Openable) -->
+      <path id="svg-env-top-flap" d="M 0 0 L 50 40 L 100 0 Z" fill="#FF597B" stroke="#D6284B" stroke-width="1"/>
+
+      <!-- Heart Seal -->
+      <path d="M 50 32 C 45 22 35 28 50 42 C 65 28 55 22 50 32 Z" fill="#FFFFFF"/>
+    </g>
+
+    <!-- Sparkles and Floating Mini Hearts -->
+    <path d="M 30 25 C 26 20 20 26 30 33 C 40 26 34 20 30 25 Z" fill="#FF4D6D"/>
+    <path d="M 195 65 C 190 60 184 66 195 73 C 206 66 200 60 195 65 Z" fill="#FF758F"/>
+    <text x="180" y="45" font-size="20" fill="#FF4D6D">✨</text>
+  </g>
+</svg>

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" width="240" height="200">
+  <defs>
+    <radialGradient id="duckGradW" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFF5BA"/>
+      <stop offset="70%" stop-color="#FFD666"/>
+      <stop offset="100%" stop-color="#F7B228"/>
+    </radialGradient>
+    <linearGradient id="veilGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#FFF0F5" stop-opacity="0.6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ground shadow -->
+  <ellipse cx="120" cy="178" rx="80" ry="12" fill="#E8B4B8" opacity="0.4"/>
+
+  <!-- GROOM DUCK (Left) -->
+  <g transform="translate(-25, 5)">
+    <!-- Body -->
+    <path d="M 60 130 C 50 150 70 170 100 170 C 130 170 145 150 135 130 Z" fill="url(#duckGradW)"/>
+    <!-- Suit / Bowtie -->
+    <path d="M 85 125 L 100 145 L 115 125 L 100 130 Z" fill="#2B1E1A"/>
+    <path d="M 90 122 Q 100 126 110 122 Q 105 130 100 132 Q 95 130 90 122 Z" fill="#E63946"/>
+    <!-- Head -->
+    <circle cx="100" cy="80" r="38" fill="url(#duckGradW)"/>
+    <!-- Top Hat -->
+    <rect x="80" y="32" width="40" height="20" rx="3" fill="#2B1E1A"/>
+    <rect x="72" y="50" width="56" height="5" rx="2" fill="#2B1E1A"/>
+    <rect x="80" y="47" width="40" height="4" fill="#E63946"/>
+    <!-- Eyes happy -->
+    <path d="M 84 76 Q 90 68 96 76" stroke="#2B1E1A" stroke-width="3" fill="none"/>
+    <path d="M 108 76 Q 114 68 120 76" stroke="#2B1E1A" stroke-width="3" fill="none"/>
+    <!-- Beak -->
+    <path d="M 90 84 C 90 80 114 80 114 84 C 114 94 90 94 90 84 Z" fill="#FF8C38"/>
+  </g>
+
+  <!-- BRIDE DUCK (Right) -->
+  <g transform="translate(45, 5)">
+    <!-- Veil behind -->
+    <path d="M 100 45 C 70 50 60 130 75 160 C 100 165 130 165 145 150 C 145 110 130 50 100 45 Z" fill="url(#veilGrad)"/>
+    <!-- Body -->
+    <path d="M 60 130 C 50 150 70 170 100 170 C 130 170 145 150 135 130 Z" fill="url(#duckGradW)"/>
+    <!-- Head -->
+    <circle cx="100" cy="80" r="38" fill="url(#duckGradW)"/>
+    <!-- Tiara / Flower crown -->
+    <circle cx="85" cy="46" r="5" fill="#FF758F"/>
+    <circle cx="100" cy="42" r="6" fill="#FF4D6D"/>
+    <circle cx="115" cy="46" r="5" fill="#FF758F"/>
+    <!-- Eyes winking -->
+    <path d="M 84 76 Q 90 68 96 76" stroke="#2B1E1A" stroke-width="3" fill="none"/>
+    <path d="M 106 74 L 118 78 M 106 78 L 118 74" stroke="#2B1E1A" stroke-width="3"/>
+    <!-- Cheeks -->
+    <circle cx="78" cy="86" r="8" fill="#FF85A1" opacity="0.6"/>
+    <circle cx="122" cy="86" r="8" fill="#FF85A1" opacity="0.6"/>
+    <!-- Beak -->
+    <path d="M 90 84 C 90 80 114 80 114 84 C 114 94 90 94 90 84 Z" fill="#FF8C38"/>
+    <!-- Bouquet -->
+    <g transform="translate(65, 125)">
+      <circle cx="0" cy="0" r="7" fill="#FF4D6D"/>
+      <circle cx="-6" cy="6" r="5" fill="#FF758F"/>
+      <circle cx="6" cy="6" r="5" fill="#FFB703"/>
+      <path d="M -2 10 L 0 22 M 2 10 L 0 22" stroke="#52B788" stroke-width="3"/>
+    </g>
+  </g>
+
+  <!-- Big Floating Wedding Heart -->
+  <g transform="translate(120, 25)">
+    <path d="M 0 -10 C -12 -25 -25 -5 0 14 C 25 -5 12 -25 0 -10 Z" fill="#FF4D6D"/>
+    <text x="0" y="2" font-family="sans-serif" font-weight="bold" font-size="10" fill="#FFF" text-anchor="middle">&lt;33</text>
+  </g>
+</svg>

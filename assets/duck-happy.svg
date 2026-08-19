@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <radialGradient id="duckGradHappy" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFF5BA"/>
+      <stop offset="70%" stop-color="#FFD666"/>
+      <stop offset="100%" stop-color="#F7B228"/>
+    </radialGradient>
+    <radialGradient id="sparkleGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#FF4D6D"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Shadow -->
+  <ellipse cx="100" cy="172" rx="55" ry="12" fill="#E8B4B8" opacity="0.4"/>
+
+  <!-- Body jumping -->
+  <path d="M 60 120 C 50 140 70 165 100 165 C 130 165 150 140 140 120 C 145 100 135 80 125 75 C 120 60 80 60 75 75 C 65 80 55 100 60 120 Z" fill="url(#duckGradHappy)"/>
+
+  <!-- Raised Happy Wings -->
+  <path d="M 55 110 C 35 90 35 120 62 125 Z" fill="#F7B228"/>
+  <path d="M 145 110 C 165 90 165 120 138 125 Z" fill="#F7B228"/>
+
+  <!-- Head -->
+  <circle cx="100" cy="70" r="42" fill="url(#duckGradHappy)"/>
+
+  <!-- Rosy Cheeks -->
+  <circle cx="70" cy="78" r="10" fill="#FF85A1" opacity="0.6"/>
+  <circle cx="130" cy="78" r="10" fill="#FF85A1" opacity="0.6"/>
+
+  <!-- Joyful Curved Eyes -->
+  <path d="M 74 68 Q 82 58 90 68" stroke="#2B1E1A" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <path d="M 110 68 Q 118 58 126 68" stroke="#2B1E1A" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+  <!-- Big Open Smiling Beak -->
+  <path d="M 84 76 C 84 70 116 70 116 76 C 116 94 84 94 84 76 Z" fill="#FF8C38"/>
+  <path d="M 92 84 C 95 90 105 90 108 84 Z" fill="#E63946"/>
+
+  <!-- Floating Hearts Explosion -->
+  <g transform="translate(100, 30)">
+    <path d="M 0 -10 C -10 -20 -20 -5 0 10 C 20 -5 10 -20 0 -10 Z" fill="#FF4D6D" transform="scale(0.8) translate(-40, -10) rotate(-20)"/>
+    <path d="M 0 -10 C -10 -20 -20 -5 0 10 C 20 -5 10 -20 0 -10 Z" fill="#FF758F" transform="scale(1.1) translate(0, -15)"/>
+    <path d="M 0 -10 C -10 -20 -20 -5 0 10 C 20 -5 10 -20 0 -10 Z" fill="#FF4D6D" transform="scale(0.8) translate(40, -10) rotate(20)"/>
+  </g>
+</svg>
