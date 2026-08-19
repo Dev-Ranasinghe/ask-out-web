@@ -230,6 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
     audioEnabled = !audioEnabled;
     if (soundIconOn) soundIconOn.style.display = audioEnabled ? 'block' : 'none';
     if (soundIconOff) soundIconOff.style.display = audioEnabled ? 'none' : 'block';
+    if (audioToggle) audioToggle.setAttribute('aria-pressed', String(!audioEnabled));
   });
 
   bindClick(backNavigation, () => {
