@@ -16,13 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
     "lol, no haha 😅",
     "NOOOOO 😭",
     "LET ME GO! 🏃‍♀️",
-    "I SAID NO! 😡"
+    "I SAID NO!"
   ];
 
   // Messages for screens that use loading transitions (flightDelivery, preQuestion)
   const loadingMessages = {
-    flightDelivery: "Flying in special delivery... ✈️💌",
-    preQuestion: "Unfolding romantic letter... 💌",
+    flightDelivery: "Flying in special delivery... ✈️",
+    preQuestion: "Unfolding letter... 💌",
     seguirConTu: "Redirecting to happiness... ✨"
   };
 
@@ -31,6 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
     welcome: document.getElementById('screen-welcome'),
     flightDelivery: document.getElementById('screen-flight-delivery'),
     preQuestion: document.getElementById('screen-pre-question'),
+    suspense: document.getElementById('screen-suspense'),
+    suspenseTwo: document.getElementById('screen-suspense-two'),
+    suspenseThree: document.getElementById('screen-suspense-three'),
+    breathing: document.getElementById('screen-breathing'),
     inicio: document.getElementById('screen-inicio'),
     opcionNo: document.getElementById('screen-opcion-no'),
     opcionSi: document.getElementById('screen-opcion-si'),
@@ -40,10 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const loadingOverlay = document.getElementById('loading-overlay');
   const loadingText = document.getElementById('loading-text');
+  const backNavigation = document.getElementById('back-navigation');
 
   const btnWelcomeNext = document.getElementById('btn-welcome-next');
   const interactiveEnvelope = document.getElementById('interactive-envelope');
   const btnPreQuestionNext = document.getElementById('btn-pre-question-next');
+  const btnSuspenseNext = document.getElementById('btn-suspense-next');
+  const btnSuspenseTwoNext = document.getElementById('btn-suspense-two-next');
+  const btnSuspenseThreeNext = document.getElementById('btn-suspense-three-next');
 
   const btnYes = document.getElementById('btn-yes');
   const btnNo = document.getElementById('btn-no');
@@ -57,6 +65,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const audioToggle = document.getElementById('audio-toggle');
   const soundIconOn = document.getElementById('sound-icon-on');
   const soundIconOff = document.getElementById('sound-icon-off');
+  let currentScreenId = 'welcome';
+
+  const previousScreens = {
+    flightDelivery: 'welcome',
+    preQuestion: 'flightDelivery',
+    suspense: 'preQuestion',
+    suspenseTwo: 'suspense',
+    suspenseThree: 'suspenseTwo',
+    breathing: 'suspenseThree',
+    inicio: 'breathing',
+    opcionNo: 'inicio',
+    opcionSi: 'inicio',
+    boda: 'opcionSi',
+    seguirConTu: 'opcionSi'
+  };
+  let breathingTimer = null;
+
+  function updateBackNavigation() {
+    if (backNavigation) {
+      backNavigation.disabled = !previousScreens[currentScreenId];
+    }
+  }
 
   // Safe event listener binder
   function bindClick(element, handler) {
@@ -68,6 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Instant Screen Navigation (No Loading Overlay) ---
   function navigateToInstant(screenId, triggerConfetti = false) {
     playSound('pop');
+    currentScreenId = screenId;
+    updateBackNavigation();
     
     Object.values(screens).forEach(screen => {
       if (screen) screen.classList.remove('active');
@@ -86,6 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Router with Loading Transition (for story intro flight/envelope) ---
   function navigateTo(screenId, triggerConfetti = false) {
     playSound('pop');
+    currentScreenId = screenId;
+    updateBackNavigation();
     
     const msg = loadingMessages[screenId] || "Loading romance... ✨";
     if (loadingText) loadingText.textContent = msg;
@@ -109,6 +143,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, 2500);
   }
+
+  setTimeout(() => {
+    if (loadingOverlay) loadingOverlay.classList.remove('active');
+  }, 2500);
 
   // --- Web Audio API Synthesizer ---
   let audioCtx = null;
@@ -185,6 +223,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (soundIconOff) soundIconOff.style.display = audioEnabled ? 'none' : 'block';
   });
 
+  bindClick(backNavigation, () => {
+    const previousScreen = previousScreens[currentScreenId];
+    if (currentScreenId === 'breathing' && breathingTimer) {
+      clearTimeout(breathingTimer);
+      breathingTimer = null;
+    }
+    if (previousScreen) navigateToInstant(previousScreen);
+  });
+
   // --- 0. WELCOME SCREEN LOGIC ---
   bindClick(btnWelcomeNext, () => {
     navigateTo('flightDelivery');
@@ -198,7 +245,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- 0.8. PRE-QUESTION CONFESSION SCREEN LOGIC ---
   bindClick(btnPreQuestionNext, () => {
-    navigateToInstant('inicio');
+    navigateToInstant('suspense');
+  });
+
+  // --- 0.9. SUSPENSE CONFIRMATION SCREEN LOGIC ---
+  bindClick(btnSuspenseNext, () => {
+    navigateToInstant('suspenseTwo');
+  });
+
+  // --- 0.95. SECOND SUSPENSE CONFIRMATION SCREEN LOGIC ---
+  bindClick(btnSuspenseTwoNext, () => {
+    navigateToInstant('suspenseThree');
+  });
+
+  // --- 0.98. FINAL SUSPENSE CONFIRMATION SCREEN LOGIC ---
+  bindClick(btnSuspenseThreeNext, () => {
+    navigateToInstant('breathing');
+    breathingTimer = setTimeout(() => {
+      breathingTimer = null;
+      navigateToInstant('inicio');
+    }, 5000);
   });
 
   // --- 1. START QUESTION SCREEN LOGIC ---
