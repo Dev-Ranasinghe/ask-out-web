@@ -469,6 +469,46 @@ html, body {
   transform: scale(1.05) rotate(2deg);
 }
 
+.date-character-box {
+  width: min(100%, 300px);
+  height: 190px;
+  padding: 8px;
+  background: linear-gradient(145deg, #FFFFFF, #FFD1DB);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 12px 18px 0 rgba(185, 65, 91, 0.14), 0 18px 34px rgba(224, 62, 101, 0.24);
+  transform: perspective(900px) rotateX(2deg) rotateY(-5deg);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.date-image {
+  border-radius: 17px;
+  object-fit: cover !important;
+  object-position: 50% 42%;
+  box-shadow: inset 0 0 0 1px rgba(61, 39, 42, 0.08), 0 8px 16px rgba(61, 39, 42, 0.2);
+}
+
+.welcome-character-box {
+  width: min(100%, 280px);
+  height: auto;
+  aspect-ratio: 675 / 674;
+}
+
+.welcome-image {
+  object-fit: contain !important;
+  object-position: center;
+}
+
+.date-character-box:hover {
+  transform: perspective(900px) rotateX(0) rotateY(0) translateY(-5px);
+  box-shadow: 14px 22px 0 rgba(185, 65, 91, 0.12), 0 24px 42px rgba(224, 62, 101, 0.28);
+}
+
+.date-character-box:hover .date-image {
+  transform: none;
+}
+
 /* Badge Header */
 .badge {
   display: inline-flex;
@@ -723,6 +763,16 @@ html, body {
   .character-box {
     width: 130px;
     height: 130px;
+  }
+
+  .date-character-box {
+    width: 100%;
+    height: 180px;
+  }
+
+  .welcome-character-box {
+    width: min(100%, 220px);
+    height: auto;
   }
 
   .btn-group-row {

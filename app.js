@@ -302,6 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- 0. WELCOME SCREEN LOGIC ---
   bindClick(btnWelcomeNext, () => {
+    unlockBackgroundAudio();
     navigateTo('flightDelivery');
   });
 
