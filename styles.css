@@ -697,59 +697,18 @@ html, body {
 
 /* Responsive Media Queries */
 @media (max-width: 480px) {
-  .app-container {
-    align-items: flex-start;
-    padding: 12px;
-  }
-
   .game-card {
-    padding: 64px 16px 24px;
+    padding: 28px 20px;
     border-radius: 24px;
   }
 
-  .screen {
-    gap: 16px;
-  }
-
-  .badge {
-    max-width: 100%;
-    padding: 6px 12px;
-    font-size: 0.76rem;
-    text-align: center;
-    white-space: normal;
-  }
-
   .main-title {
-    max-width: 100%;
-    font-size: clamp(1.35rem, 7vw, 1.5rem);
-    line-height: 1.2;
-    overflow-wrap: anywhere;
-  }
-
-  .subtitle {
-    max-width: 100%;
-    font-size: 0.95rem;
-    line-height: 1.35;
-    overflow-wrap: anywhere;
+    font-size: 1.5rem;
   }
 
   .character-box {
-    width: 112px;
-    height: 112px;
-    margin-bottom: 0;
-  }
-
-  .flight-container {
-    height: 120px;
-  }
-
-  .envelope-card-btn {
-    padding: 16px;
-  }
-
-  .btn-group {
-    gap: 10px;
-    margin-top: 4px;
+    width: 130px;
+    height: 130px;
   }
 
   .btn-group-row {
@@ -757,34 +716,7 @@ html, body {
     gap: 12px;
   }
 
-  .btn-yes,
-  .btn-no,
-  .btn-secondary {
+  .btn-yes, .btn-no {
     width: 100%;
-    min-width: 0;
-    padding: 13px 16px;
-    font-size: 1.05rem;
-    line-height: 1.2;
-    white-space: normal;
-    overflow-wrap: anywhere;
-  }
-
-  .breathing-screen {
-    gap: 14px;
-  }
-
-  .breathing-orb {
-    width: 108px;
-    height: 108px;
-    margin: 8px 0 4px;
-  }
-
-  .wedding-card {
-    padding: 18px 14px;
-  }
-
-  .romantic-text {
-    font-size: 1.1rem;
-    overflow-wrap: anywhere;
   }
 }
