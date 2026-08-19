@@ -261,13 +261,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Audio Toggle Switch ---
   bindClick(audioToggle, () => {
+    if (backgroundAudio && (backgroundAudio.paused || backgroundAudio.muted)) {
+      audioEnabled = true;
+      backgroundAudio.muted = false;
+      startBackgroundAudio();
+      updateAudioControl();
+      return;
+    }
+
     audioEnabled = !audioEnabled;
     updateAudioControl();
     syncBackgroundAudio();
   });
 
   startBackgroundAudio();
-  document.addEventListener('pointerdown', unlockBackgroundAudio, { once: true });
+  document.addEventListener('pointerdown', event => {
+    if (!(event.target instanceof Element) || !event.target.closest('#audio-toggle')) {
+      unlockBackgroundAudio();
+    }
+  }, { once: true });
   document.addEventListener('keydown', unlockBackgroundAudio, { once: true });
   updateAudioControl();
 
