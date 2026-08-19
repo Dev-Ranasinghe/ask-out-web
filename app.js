@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- State Variables ---
   let noClickCount = 0;
   let audioEnabled = true;
+  let lastNoPosition = null;
 
   // Exact 6 NO refusal stages from Figma design
   const noRefusalTexts = [
@@ -293,8 +294,19 @@ document.addEventListener('DOMContentLoaded', () => {
     btnNo.style.position = 'absolute';
     const maxLeft = Math.max(0, row.clientWidth - btnNo.offsetWidth);
     const maxTop = Math.max(0, row.clientHeight - btnNo.offsetHeight);
-    const left = Math.random() * maxLeft;
-    const top = Math.random() * maxTop;
+    const minimumJump = Math.min(140, Math.max(maxLeft, maxTop) * 0.55);
+    let left = Math.random() * maxLeft;
+    let top = Math.random() * maxTop;
+
+    for (let attempt = 0; attempt < 12 && lastNoPosition; attempt++) {
+      const horizontalDistance = left - lastNoPosition.left;
+      const verticalDistance = top - lastNoPosition.top;
+      if (Math.hypot(horizontalDistance, verticalDistance) >= minimumJump) break;
+      left = Math.random() * maxLeft;
+      top = Math.random() * maxTop;
+    }
+
+    lastNoPosition = { left, top };
 
     btnNo.style.left = `${left}px`;
     btnNo.style.top = `${top}px`;
@@ -361,6 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btnNo.style.top = '';
       btnNo.style.transform = '';
     }
+    lastNoPosition = null;
     if (btnTryAgain) btnTryAgain.classList.remove('variant-dark');
   }
 
