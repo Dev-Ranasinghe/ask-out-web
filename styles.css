@@ -781,7 +781,7 @@ html, body {
   }
 
   .question-actions {
-    min-height: 320px;
+    min-height: 220px;
   }
 
   .btn-yes, .btn-no {
