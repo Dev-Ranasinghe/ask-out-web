@@ -520,7 +520,7 @@ html, body {
 }
 
 .question-actions {
-  min-height: 110px;
+  min-height: 180px;
 }
 
 /* Primary YES Button */
@@ -721,7 +721,7 @@ html, body {
   }
 
   .question-actions {
-    min-height: 150px;
+    min-height: 240px;
   }
 
   .btn-yes, .btn-no {
